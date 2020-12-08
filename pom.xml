@@ -51,7 +51,32 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!--The Failsafe Plugin is designed to run integration tests. -->
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<runOrder>alphabetical</runOrder>
+					<!--property used for skipping the integration tests -->
+
+					<skipTests>3.0.0-M1</skipTests>
+					<!--include the integration tests classes -->
+					<includes>
+						<include>**/*IT.class</include>
+					</includes>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+
 
 </project>
