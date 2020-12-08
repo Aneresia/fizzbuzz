@@ -1,4 +1,8 @@
-package com.ness.fizzbuzz.util;
+package com.ness.fizzbuzz.service.impl;
+
+import com.ness.fizzbuzz.service.NumbersService;
+import com.ness.fizzbuzz.util.OperationsEnum;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -7,7 +11,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FizzBuzzProcessor {
+@Service
+public class NumbersServiceImpl implements NumbersService {
 
     private static final String STR_INTEGER = "integer";
 
@@ -17,10 +22,11 @@ public class FizzBuzzProcessor {
                 .collect(Collectors.joining( " "));
     }
 
-    public String calculateFizzAlfresco(List<Integer> numbers) {
-        return numbers.stream()
+    public Map<String, String> calculateFizzAlfresco(List<Integer> numbers) {
+        String text =  numbers.stream()
                 .map(OperationsEnum::alfresco)
                 .collect(Collectors.joining( " "));
+        return createReport(text);
     }
 
     public String getNumbersOfRange(int startRange, int endRange) throws NumberFormatException{
