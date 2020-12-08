@@ -12,10 +12,23 @@ public class FizzBuzzProcessor {
                 .collect(Collectors.joining( " "));
     }
 
+    public String calculateFizzAlfresco(List<Integer> numbers) {
+        return numbers.stream()
+                .map(OperationsEnum::alfresco)
+                .collect(Collectors.joining( " "));
+    }
+
     public String getNumbersOfRange(int startRange, int endRange) throws NumberFormatException{
         return Stream.iterate(startRange, n -> n + 1)
                 .limit(endRange)
                 .map(OperationsEnum::fizzBuzz)
+                .collect(Collectors.joining(" "));
+    }
+
+    public String getNumbersOfRangeAlfresco(int startRange, int endRange) throws NumberFormatException{
+        return Stream.iterate(startRange, n -> n + 1)
+                .limit(endRange)
+                .map(OperationsEnum::alfresco)
                 .collect(Collectors.joining(" "));
     }
 

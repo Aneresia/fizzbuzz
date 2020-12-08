@@ -6,7 +6,8 @@ public enum OperationsEnum {
 
     FIFHTEEN(15 , "fizzbuzz"),
     THREE( 3, "fizz"),
-    FIVE( 5, "buzz");
+    FIVE( 5, "buzz"),
+    ALFRESCO(3, "alfresco");
 
     private int number;
     private String text;
@@ -18,9 +19,16 @@ public enum OperationsEnum {
 
     public static String fizzBuzz(Integer number) {
         return Stream.of(FIFHTEEN, THREE, FIVE)
-                .filter(op -> Integer.valueOf(number) % op.number == 0)
+                .filter(op -> number % op.number == 0)
                 .findFirst()
                 .map(op -> op.text)
                 .orElse(Integer.toString((number)));
+    }
+
+    public static String alfresco(Integer number) {
+        return Stream.of(ALFRESCO, FIFHTEEN, THREE, FIVE)
+                .filter(op -> (op == ALFRESCO && Integer.toString(number).contains(String.valueOf(op.number)))
+                        || (op != ALFRESCO && number % op.number == 0))
+                .findFirst().map(op -> op.text).orElse(Integer.toString(number));
     }
 }

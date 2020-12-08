@@ -1,11 +1,8 @@
 package com.ness.fizzbuzz;
 
 import com.ness.fizzbuzz.util.FizzBuzzProcessor;
-import com.ness.fizzbuzz.util.OperationsEnum;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FizzBuzzCalculator {
 
@@ -18,6 +15,11 @@ public class FizzBuzzCalculator {
         System.out.println(fizzBuzzProcessor.calculateFizzBuzz(numbers));
 
         System.out.println(fizzBuzzProcessor.getNumbersOfRange(1,20));
+
+        //generate alfresco
+        System.out.println(fizzBuzzProcessor.calculateFizzAlfresco(numbers));
+        System.out.println(fizzBuzzProcessor.getNumbersOfRangeAlfresco(1,20));
+
     }
 
 
