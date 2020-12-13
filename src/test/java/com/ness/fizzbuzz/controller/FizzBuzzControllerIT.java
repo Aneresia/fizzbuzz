@@ -13,17 +13,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -58,7 +55,7 @@ class FizzBuzzControllerIT {
     void testRangeOfNumbers() throws Exception {
         doReturn(report).when(numbersService).getAlfrescoWithReport(1, 20);
         mockMvc
-                .perform(get("/fizzbuzz/range"))
+                .perform(get("/fizzbuzz/range/1/20"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -67,18 +64,19 @@ class FizzBuzzControllerIT {
     void testRangeOfNumbersWithParams() throws Exception {
         when(numbersService.getAlfrescoWithReport(1, 20))
                 .thenReturn(report);
+        Map<String, String> messages =report;
         mockMvc
-                .perform(get("/fizzbuzz/range").param("startRange", "1").param("endRange","20"))
+                .perform(get("/fizzbuzz/range/1/20"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.alfresco", is("2")));
+                .andExpect(model().attribute("messages", messages));
     }
 
     @Test
     void testRangeOfNumbersWithText() throws Exception {
         doThrow(new NumberFormatException()).when(numbersService).getAlfrescoWithReport(anyInt(), anyInt());
         mockMvc
-                .perform(get("/fizzbuzz/range"))
+                .perform(get("/fizzbuzz/range/a/20"))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -102,20 +100,4 @@ class FizzBuzzControllerIT {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    void testOnlyNumbersForGivenNumbersOnly() throws Exception {
-        List<Integer> texts = new ArrayList<>();
-        texts.add(1);
-        texts.add(2);
-        texts.add(3);
-        texts.add(4);
-        texts.add(5);
-        texts.add(6);
-
-        when(numbersService.calculateFizzAlfresco(texts)).thenReturn(any());
-        mockMvc
-                .perform(get("/fizzbuzz").param("numbers", "1 2 3 4 5 6"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
 }
