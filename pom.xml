@@ -43,6 +43,18 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -51,31 +63,43 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+
+		<!--run "mvn clean install -P skip-tests" and the properties defined for
+            each test suite will be used -->
+		<profile>
+			<id>verify</id>
+			<build>
 			<!--The Failsafe Plugin is designed to run integration tests. -->
+			<plugins>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>3.0.0-M1</version>
 				<configuration>
 					<runOrder>alphabetical</runOrder>
 					<!--property used for skipping the integration tests -->
-
-					<skipTests>3.0.0-M1</skipTests>
+					<skipTests>true</skipTests>
 					<!--include the integration tests classes -->
 					<includes>
 						<include>**/*IT.class</include>
 					</includes>
-					<executions>
-						<execution>
-							<goals>
-								<goal>integration-test</goal>
-								<goal>verify</goal>
-							</goals>
-						</execution>
-					</executions>
+
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
-	</build>
+			</build>
+	</profile>
+	</profiles>
 
 
 

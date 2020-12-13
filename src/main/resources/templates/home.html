@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head >
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <p>Fizz Buzz is here!</p>
+</head>
+<body>
+
+<div>
+        <p><label>Start range:</label></p>
+        <p><input type="text" id="startRange" name="startRange" /></p>
+        <p><label>End range:</label></p>
+        <p><input type="text" id="endRange" name="endRange" /></p>
+
+        <p><button id="button-fizz" th:text="send" th:onclick="'loadSearchResult();'"></button></p>
+</div>
+
+<div   th:fragment="messages">
+    <p><label id="messages" th:text="${messages}"></label></p>
+</div>
+
+<script  th:inline="javascript">
+
+function loadSearchResult() {
+$.ajax({
+type: 'get',
+url: '/fizzbuzz/range/' + $('#startRange').val() + '/' + $('#endRange').val(),
+success: function(data){
+ console.log(data);
+
+$('#messages').html(data);
+
+  /*]]>*/
+
+},
+error: function(){
+    alert('Not a number!');
+  }
+})
+
+}
+
+</script>
+
+
+</body>

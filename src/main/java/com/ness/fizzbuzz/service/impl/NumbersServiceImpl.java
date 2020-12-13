@@ -38,7 +38,7 @@ public class NumbersServiceImpl implements NumbersService {
 
     public String getNumbersOfRangeAlfresco(int startRange, int endRange) throws NumberFormatException{
         return Stream.iterate(startRange, n -> n + 1)
-                .limit(endRange)
+                .limit(endRange-startRange+1)
                 .map(OperationsEnum::alfresco)
                 .collect(Collectors.joining(" "));
     }
